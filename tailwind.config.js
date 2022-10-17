@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                nanum: ["Nanum Myeongjo", "serif"],
+                lora: ["Lora", "serif"],
                 sora: ["SORA", "sans-serif"],
             },
         },
