@@ -1,5 +1,10 @@
 @import url("http://fonts.cdnfonts.com/css/sora");
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dashboard__active {
+    filter: invert(26%) sepia(81%) saturate(6404%) hue-rotate(354deg)
+        brightness(94%) contrast(124%);
+}
