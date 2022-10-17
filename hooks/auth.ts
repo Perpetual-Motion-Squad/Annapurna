@@ -1,19 +1,19 @@
-import { useWeb3 } from "@3rdweb/hooks"
+import { useUser } from "@thirdweb-dev/react"
 import { useEffect, useState } from "react";
-import type { IUser } from "../src/db"
+import type { IUser } from "~/db"
 
 export const useAuth = () => {
-    const { address } = useWeb3();
+    const { user: currentUser } = useUser();
     const [user, setUser] = useState<IUser | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (address) {
+        if (currentUser) {
             fetch("/api/get-user", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ address })
+                body: JSON.stringify({ address: currentUser.address })
             }).then(async res => {
                 if (res.status === 200)
                     setUser(await res.json());
@@ -25,7 +25,7 @@ export const useAuth = () => {
         } else
             setLoading(false);
 
-    }, [address]);
+    }, [currentUser]);
 
     return { user, loading, error };
 }
