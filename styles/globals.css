@@ -12,3 +12,11 @@
 .shadow__up {
     box-shadow: 0 -32px 38px 0 rgba(0, 0, 0, 0.7);
 }
+
+.banner__mask {
+    -webkit-mask-image: url("../public/images/banner-mask.png");
+    mask-image: url("../public/images/banner-mask.png");
+    mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+}
