@@ -2,7 +2,6 @@ import Image from "next/image";
 import LoginForm from "../components/LoginForm";
 import { useAddress } from "@thirdweb-dev/react";
 import Connect from "components/Ethereum/connect";
-import { useState } from "react";
 
 type Props = {};
 
