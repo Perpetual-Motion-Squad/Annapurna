@@ -1,31 +1,29 @@
-import { useUser } from "@thirdweb-dev/react"
+import { useAddress } from "@thirdweb-dev/react"
 import { useEffect, useState } from "react";
-import type { IUser } from "~/db"
+import type { IUser } from "~/db";
+
+export const getUser = async (address: string): Promise<IUser> => {
+    const resp = await fetch('/api/get-user?' + new URLSearchParams({ address }));
+    if (resp.status === 200) return await resp.json()
+    throw new Error((await resp.json()).message)
+}
 
 export const useAuth = () => {
-    const { user: currentUser } = useUser();
-    const [user, setUser] = useState<IUser | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const address = useAddress();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | undefined>(undefined);
+    const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
-        if (currentUser) {
-            fetch("/api/get-user", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ address: currentUser.address })
-            }).then(async res => {
-                if (res.status === 200)
-                    setUser(await res.json());
-                else if (res.status > 400)
-                    setError((await res.json()).message);
+        if (address) {
+            setLoading(true);
+            getUser(address)
+                .then((user) => setUser(user))
+                .catch((err) => setError(err.message))
+                .finally(() => setLoading(false))
+        }
 
-                setLoading(false);
-            })
-        } else
-            setLoading(false);
+    }, [address]);
 
-    }, [currentUser]);
-
-    return { user, loading, error };
+    return { loading, error, user, address };
 }
