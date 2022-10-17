@@ -6,7 +6,7 @@ type Props = {};
 const Sidebar = (props: Props) => {
     const SIZE = 30;
     return (
-        <div className="flex flex-col border-r-[1px] border-[#d9d9d972] items-center gap-8 px-3 justify-between py-5 pt-10">
+        <div className="flex flex-col border-r-[1px] border-[#d9d9d972] items-center gap-8 px-3 justify-between py-5 pt-10 sticky top-0 h-screen">
             <Image
                 src="/images/pin-point.svg"
                 height={50}
