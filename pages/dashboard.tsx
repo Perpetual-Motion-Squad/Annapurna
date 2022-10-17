@@ -10,9 +10,22 @@ const Dashboard = (props: Props) => {
     return (
         <DashboardLayout className="p-10 w-full">
             <DashboardHeader />
-            <div className="mt-16 relative h-full">
+            <div className="mt-16 relative">
                 <h2 className="text-white font-sora text-4xl">Latest Events</h2>
-                <div className="mt-10 flex gap-5 w-full flex-wrap">
+                <div className="mt-10 flex gap-5 w-full flex-wrap max-h-[420px] overflow-scroll pb-24">
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
+                    <LocationCard />
                     <LocationCard />
                     <LocationCard />
                     <LocationCard />
@@ -27,7 +40,7 @@ const Dashboard = (props: Props) => {
                 <img
                     src="/images/map.png"
                     alt="map"
-                    className="w-full h-[300px] object-cover rounded-2xl shadow__up absolute mt-10"
+                    className="w-full h-[300px] object-cover rounded-2xl shadow__up relative -mt-10 z-10"
                 />
             </div>
         </DashboardLayout>
