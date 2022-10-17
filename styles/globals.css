@@ -8,3 +8,7 @@
     filter: invert(26%) sepia(81%) saturate(6404%) hue-rotate(354deg)
         brightness(94%) contrast(124%);
 }
+
+.shadow__up {
+    box-shadow: 0 -32px 38px 0 rgba(0, 0, 0, 0.7);
+}
