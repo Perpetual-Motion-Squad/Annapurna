@@ -27,6 +27,7 @@ import type { AppProps } from "next/app";
 //   provider,
 // });
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Component {...pageProps} />
