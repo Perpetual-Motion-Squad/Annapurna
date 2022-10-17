@@ -7,8 +7,10 @@ client.connect().then(() => console.log("Connected to database"));
 const db = client.db('annapurna');
 
 export type IUser = {
-    username: string;
     address: string;
+    username: string;
+    email: string;
+    locality: string;
 }
 
 export const Users = db.collection<IUser>('Users');

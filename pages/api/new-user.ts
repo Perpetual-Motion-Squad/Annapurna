@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Users } from '~/db';
+import { IUser, Users } from '~/db';
 
 export default async function handler(
     req: NextApiRequest,
@@ -8,11 +8,11 @@ export default async function handler(
     if (req.method !== 'POST')
         return res.status(405).send({ message: 'Only POST requests allowed' })
 
-    const { username, address } = req.body as { username: string, address: string };
+    const { username, address, email, locality } = req.body as IUser;
 
-    if (!username || !address)
+    if (!username || !address || !email || !locality)
         return res.status(400).send({ message: 'Missing username or address' })
 
-    await Users.insertOne({ username, address });
+    await Users.insertOne({ username, address, email, locality });
     return res.status(200).send({ message: 'User created' });
 }
