@@ -1,11 +1,18 @@
 import { FormEventHandler } from "react";
 import { IUser } from "~/db";
+import UserRoles from "~/db/roles";
+
+const UserTypes = {
+  [UserRoles.Individual]: "Individual",
+  [UserRoles.Organisation]: "Organisation",
+};
 
 export default function Form({ address }: { address: string }) {
   const submitForm: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries()) as IUser;
+    const data = Object.fromEntries(formData.entries()) as unknown as IUser;
+    console.log(data);
     data.address = address;
     const res = await fetch("/api/new-user", {
       method: "POST",
@@ -58,13 +65,32 @@ export default function Form({ address }: { address: string }) {
             placeholder="Enter Your locality"
           />
         </div>
+        <div className="w-full flex justify-between">
+          <h2>Register As</h2>
+          <div className="flex gap-2">
+            {Object.entries(UserTypes).map(([key, value]) => (
+              <div key={key} className="flex gap-2 items-center">
+                <input
+                  type="radio"
+                  name="role"
+                  value={key}
+                  id={key}
+                  className="w-4 h-4"
+                />
+                <label htmlFor={key} className="text-white text-lg">
+                  {value}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <button
+          className="hover:bg-[#531e0b] border bg-[#FF5F26] rounded-xl w-3/4 py-5 text-2xl"
+          type="submit"
+        >
+          Create Account
+        </button>
       </form>
-      <button
-        className="hover:bg-[#531e0b] border bg-[#FF5F26] rounded-xl w-3/4 py-5 text-2xl"
-        onClick={submitForm}
-      >
-        Create Account
-      </button>
     </div>
   );
 }
