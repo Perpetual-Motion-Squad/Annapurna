@@ -9,6 +9,9 @@ contract Annapurna is ERC1155, Ownable {
 
     mapping(uint256 => string) tokenURIs;
     mapping(uint256 => uint256) tokenSupply;
+    mapping(uint256 => address) tokenCreators;
+
+    uint256 public NEXT_TOKEN_ID = 1;
 
     constructor() ERC1155("") {
         tokenSupply[0] = 1;
@@ -23,14 +26,16 @@ contract Annapurna is ERC1155, Ownable {
         uint256 _tokenId,
         uint256 _supply,
         string memory _tokenURI
-    ) external onlyOwner {
+    ) external payable {
         require(_supply > 0, "Annapurna: Supply must be greater than 0");
         require(
             tokenSupply[_tokenId] == 0,
             "Annapurna: Token supply already set"
         );
+        tokenCreators[_tokenId] = msg.sender;
         tokenSupply[_tokenId] = _supply;
         tokenURIs[_tokenId] = _tokenURI;
+        NEXT_TOKEN_ID++;
     }
 
     function mint(

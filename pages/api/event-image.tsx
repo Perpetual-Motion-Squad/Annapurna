@@ -64,6 +64,8 @@ export default async function handler(req: NextRequest) {
       event: searchParams.get('event') || '',
       date: searchParams.get('date') || '',
       location: searchParams.get('location') || '',
+      ticketSupply: +searchParams.get('ticketSupply')!,
+      registeredAddresses: [],
     };
 
     return new ImageResponse(

@@ -3,7 +3,7 @@ import UserRole from "./roles";
 
 const client = new MongoClient(process.env.DATABASE_URL!);
 
-client.connect().then(() => console.log("Connected to database"));
+client.connect().then(() => console.log("Connected to database")).catch((err) => console.error(err));
 
 const db = client.db("annapurna");
 
@@ -17,7 +17,10 @@ export type IUser = {
 
 export type IEvent = {
     event: string;
+    tokenID: number;
+    imageURL: string;
     location: string;
+    coordinates: { lat: number, lng: number };
     date: string;
     registeredAddresses: string[];
     ticketSupply: number;
