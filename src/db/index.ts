@@ -13,4 +13,9 @@ export type IUser = {
     locality: string;
 }
 
+export type IEvent = {
+
+}
+
 export const Users = db.collection<IUser>('Users');
+export const Events = db.collection<IEvent>('Events');

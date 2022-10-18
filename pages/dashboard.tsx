@@ -4,7 +4,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import DashboardLayout from "../components/DashboardLayout";
 import LocationCard from "../components/LocationCard";
 import { useBalance } from "@thirdweb-dev/react"
-import { useAuth } from "hooks/auth";
+import { useAuth } from "~/hooks/auth";
 import { IUser } from "~/db";
 import EventModel from "components/EventModel";
 
