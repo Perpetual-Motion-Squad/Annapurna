@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
+    "@react-google-maps/api": "^2.13.1",
     "@thirdweb-dev/react": "^3.2.5",
     "@thirdweb-dev/sdk": "^3.2.5",
     "@vercel/og": "^0.0.19",
