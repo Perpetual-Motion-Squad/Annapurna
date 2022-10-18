@@ -2,18 +2,37 @@ import { useBalance } from "@thirdweb-dev/react";
 import DashboardHeader from "components/DashboardHeader";
 import DashboardLayout from "components/DashboardLayout";
 import React, { FormEventHandler } from "react";
-import { IUser } from "~/db";
+import { IEvent, IUser } from "~/db";
 import { useAuth } from "~/hooks/auth";
+import { useContract } from "~/hooks/contract";
+import { create } from "ipfs-http-client";
 
 type Props = { user: IUser };
 
 const AddEventPage = (props: Props) => {
     const balance = useBalance();
+    const { contract } = useContract();
+
     const submitForm: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
+
         const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries()) as unknown as IUser;
+        const data = Object.fromEntries(formData.entries()) as unknown as IEvent;
+        try {
+            const img = await fetch('/api/event-image?' + new URLSearchParams({ event: data.event, date: data.date, location: data.location, ticketSupply: data.ticketSupply.toString() }).toString());
+            const imgBlob = await img.blob();
+            const imgBuffer = await imgBlob.arrayBuffer();
+            const ipfs = create({});
+            const ipfsResult = await ipfs.add(imgBuffer);
+            console.log(ipfsResult.path);
+        } catch (e) {
+            console.log(e);
+        }
+
         console.log(data);
+        return;
+
+        contract.setTokenSupply(2, data.ticketSupply, "")
         const res = await fetch("/api/new-event", {
             method: "POST",
             body: JSON.stringify(data),

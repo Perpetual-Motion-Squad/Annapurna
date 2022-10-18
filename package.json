@@ -16,6 +16,7 @@
     "@vercel/og": "^0.0.19",
     "add": "^2.0.6",
     "hardhat": "^2.12.0",
+    "ipfs-http-client": "^58.0.1",
     "mongodb": "^4.10.0",
     "next": "12.3.1",
     "react": "18.2.0",
