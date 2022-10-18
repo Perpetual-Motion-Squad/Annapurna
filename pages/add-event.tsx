@@ -67,22 +67,23 @@ const AddEventPage = (props: Props) => {
                 imgURL
             );
             console.log(imgURL, res);
+            data.coordinates = mapCoords;
+            console.log(data);
+
+            const resp = await fetch("/api/new-event", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (resp.status === 200) setSuccess(true);
+            else setSuccess(false);
+
         } catch (e) {
             setSuccess(false);
             console.log(e);
         }
 
-        data.coordinates = mapCoords;
-        console.log(data);
-
-        const res = await fetch("/api/new-event", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" },
-        });
-
-        if (res.status === 200) setSuccess(true);
-        else setSuccess(false);
         setLoading(false);
     };
 

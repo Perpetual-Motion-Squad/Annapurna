@@ -3,7 +3,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import DashboardLayout from "../components/DashboardLayout";
 import { useBalance } from "@thirdweb-dev/react";
 import { useAuth } from "~/hooks/auth";
-import { Events, IEvent, IUser } from "~/db";
+import { Events, IEventDocument, IUser } from "~/db";
 import ParticipantCard from "components/ParticipantCard";
 import ParticipantHeader from "components/ParticipantCard/ParticipantHeader";
 import { GetServerSideProps } from "next";
@@ -11,31 +11,13 @@ import { ObjectId } from "mongodb";
 import EventModel from "components/EventModel";
 import { useState } from "react";
 
-type Props = { event: IEvent | null };
+type Props = { event: IEventDocument | null };
 
-const participantDetailsArray = [
-  {
-    username: "Dhruv Bakshi",
-    address: "0x1234567890",
-    tokens: 6,
-  },
-  {
-    username: "Dhruv Bakshi",
-    address: "0x1234567890",
-    tokens: 6,
-  },
-  {
-    username: "Dhruv Bakshi",
-    address: "0x1234567890",
-    tokens: 6,
-  },
-];
-
-const ParticpantsPage = (props: { user: IUser; event: IEvent }) => {
+const ParticpantsPage = (props: { user: IUser; event: IEventDocument }) => {
   const balance = useBalance();
   const [showModal, setShowModal] = useState(false);
 
-  const participantDetails = participantDetailsArray.map(
+  const participantDetails: JSX.Element[] = props.event.registeredAddresses.map(
     (participant, index) => {
       return (
         <ParticipantCard
@@ -96,11 +78,13 @@ const Particpants = (props: Props) => {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   const id = context.query.id as string;
-  let event: IEvent | null = null;
+  let event: IEventDocument | null = null;
   if (id)
-    event = await Events.findOne({ _id: new ObjectId(id as string) });
-
-  delete (event as unknown as any)?._id;
+    event = await Events.findOne({ _id: new ObjectId(id as string) }) as unknown as IEventDocument;
+  if (event) {
+    event.eventId = (event as unknown as any)._id.toString();
+    delete (event as unknown as any)._id;
+  }
 
   return {
     props: {

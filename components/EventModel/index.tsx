@@ -1,22 +1,58 @@
+import { BigNumber } from 'ethers';
+import type { IBuyTicketsRequest } from 'pages/api/buy-tickets';
 import { FormEventHandler, useState } from 'react'
-import { IEvent } from '~/db';
+import { IEventDocument } from '~/db';
+import { useAuth } from '~/hooks/auth';
+import { useContract } from '~/hooks/contract';
 
 type Props = {
     setShowModel: (value: boolean) => void;
-    event: IEvent;
+    event: IEventDocument;
 }
 
 const EventModel = (props: Props) => {
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | null>(null);
+    const { contract } = useContract();
+    const { user } = useAuth();
 
-    const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
+    const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const tickets = parseInt(Object.fromEntries(formData.entries()).tickets as string);
         setLoading(true);
-        console.log(tickets);
+
+        try {
+            console.log(tickets);
+
+            const rate: BigNumber = await contract.getRate();
+
+            await contract.mint(user?.address, props.event.tokenID, tickets, {
+                from: user?.address,
+                value: rate.mul(tickets),
+            });
+
+            await fetch('/api/buy-tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: user?.address,
+                    eventID: props.event.eventId,
+                    tokens: tickets,
+                    username: user?.username
+                } as IBuyTicketsRequest)
+            });
+
+            setSuccess(true);
+
+        } catch (e) {
+            console.log((e as any).message);
+            setSuccess(false);
+        }
+
         setLoading(false);
     }
 
