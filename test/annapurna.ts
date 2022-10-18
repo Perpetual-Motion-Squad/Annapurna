@@ -17,10 +17,14 @@ describe("Annapurna", function () {
     });
 
     it("Should create token with limited supply", async function () {
-        const tokenId = 1
+        const tokenId = 1;
         const tokenSupply: number = 1
         const transaction = await annapurna.setTokenSupply(tokenId, tokenSupply, "https://gist.github.com/KorigamiK/13c27ac6f0fc0260b9694ecc99e0dee9/raw/2a08c55cc5445f85261b81af2574612478f36a3d/0.json")
         expect(await transaction.wait()).to.not.throw;
+    })
+
+    it("Should have new tokenId changed", async function () {
+        expect(await annapurna.NEXT_TOKEN_ID()).to.equal(BigNumber.from(2));
     })
 
     it("Should mint token", async function () {

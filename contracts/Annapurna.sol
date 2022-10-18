@@ -11,6 +11,8 @@ contract Annapurna is ERC1155, Ownable {
     mapping(uint256 => uint256) tokenSupply;
     mapping(uint256 => address) tokenCreators;
 
+    uint256 public NEXT_TOKEN_ID = 1;
+
     constructor() ERC1155("") {
         tokenSupply[0] = 1;
         tokenURIs[0] = "asdf";
@@ -33,6 +35,7 @@ contract Annapurna is ERC1155, Ownable {
         tokenCreators[_tokenId] = msg.sender;
         tokenSupply[_tokenId] = _supply;
         tokenURIs[_tokenId] = _tokenURI;
+        NEXT_TOKEN_ID++;
     }
 
     function mint(

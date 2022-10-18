@@ -9,7 +9,7 @@ export default async function handler(
     if (req.method !== "POST")
         return res.status(405).send({ message: "Only POST requests allowed" });
 
-    const { event, location, date, ticketSupply } = req.body as IEvent;
+    const { event, location, date, ticketSupply, coordinates, tokenID, imageURL } = req.body as IEvent;
 
     if (!event || !location || !date)
         return res.status(400).send({ message: "Missing event or location" });
@@ -17,8 +17,11 @@ export default async function handler(
     await Events.insertOne({
         event,
         location,
+        imageURL,
         date,
         ticketSupply: +ticketSupply || 0,
+        coordinates,
+        tokenID,
         registeredAddresses: [],
     });
     return res.status(200).send({ message: "Event created" });
