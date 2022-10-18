@@ -1,6 +1,11 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  name: string;
+  age: number;
+  occupation: string;
+  tokens: number;
+};
 
 const ParticipantCard = (props: Props) => {
   return (
