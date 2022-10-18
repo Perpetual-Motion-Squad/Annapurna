@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import UserRole from "./roles";
 
 const client = new MongoClient(process.env.DATABASE_URL!);
 
@@ -11,6 +12,7 @@ export type IUser = {
     username: string;
     email: string;
     locality: string;
+    role: UserRole;
 };
 
 export type IEvent = {

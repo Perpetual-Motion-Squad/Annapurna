@@ -19,9 +19,11 @@ const DashboardHeader = (props: Props) => {
                 <h2 className="font-sora font-normal text-xl">
                     6, Tokens available
                 </h2>
-                {
-                    props.ether && <h2>Balance {props.ether} ETH</h2>
-                }
+                {props.ether && (
+                    <h2 className="font-sora font-normal text-xl">
+                        | &nbsp; Balance {props.ether} ETH
+                    </h2>
+                )}
             </div>
         </div>
     );
