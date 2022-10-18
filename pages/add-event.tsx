@@ -6,6 +6,8 @@ import { IEvent, IUser } from "~/db";
 import { useAuth } from "~/hooks/auth";
 import { useContract } from "~/hooks/contract";
 import { create } from "ipfs-http-client";
+import { useJsApiLoader, GoogleMap, MarkerF } from '@react-google-maps/api';
+
 
 type Props = { user: IUser };
 
@@ -29,6 +31,7 @@ const AddEventPage = (props: Props) => {
             console.log(e);
         }
 
+        formData.append('location', JSON.stringify(mapCoords))
         console.log(data);
         return;
 
@@ -41,7 +44,18 @@ const AddEventPage = (props: Props) => {
 
         if (res.status === 200) window.location.href = "/dashboard";
     };
+    const center = {
+        lat: 28.641307,
+        lng: 77.111225
+    }
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    })
+    const [mapCoords, setMapsCoords] = React.useState(center);
 
+    if (!isLoaded) {
+        return <div>Loading...</div>
+    }
     return (
         <DashboardLayout className="p-10 w-full">
             <DashboardHeader
@@ -54,7 +68,7 @@ const AddEventPage = (props: Props) => {
                 </h2>
 
                 <form
-                    className="flex flex-col gap-5 font-sora mt-10 w-1/2 mx-auto"
+                    className="flex flex-col gap-5 font-sora mt-10 w-1/2 mx-auto text-white"
                     onSubmit={submitForm}
                 >
                     <label className="flex gap-10 justify-between text-xl items-center">
@@ -65,7 +79,7 @@ const AddEventPage = (props: Props) => {
                         />
                     </label>
                     <label className="flex gap-10 justify-between text-xl items-center">
-                        location:
+                        Location:
                         <input
                             className="w-60 py-2 px-4 rounded-xl"
                             name="location"
@@ -91,6 +105,34 @@ const AddEventPage = (props: Props) => {
                         Submit
                     </button>
                 </form>
+                <div className="py-0 shadow__up">
+                    <GoogleMap
+                        mapContainerStyle={{
+                            width: '100%',
+                            height: '500px',
+                            borderRadius: '20px',
+                            margin: '0 auto 0 0',
+                            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
+                            marginTop: '10px',
+                            zIndex: 10,
+                        }}
+                        zoom={14}
+                        center={{ lat: 28.641307, lng: 77.111225 }}
+                        options={{
+                            disableDefaultUI: true,
+                            zoomControl: false,
+                            streetViewControl: false,
+                            mapTypeControl: false,
+                            fullscreenControl: false,
+                        }}
+                        onClick={ev => {
+                            setMapsCoords({ lat: ev.latLng.lat(), lng: ev.latLng.lng() })
+                        }}
+                    >
+                        <MarkerF position={mapCoords} />
+                    </GoogleMap>
+                </div>
+
             </div>
         </DashboardLayout>
     );

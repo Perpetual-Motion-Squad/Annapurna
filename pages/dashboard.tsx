@@ -7,7 +7,7 @@ import { useBalance } from "@thirdweb-dev/react"
 import { useAuth } from "~/hooks/auth";
 import { IUser } from "~/db";
 import EventModel from "components/EventModel";
-import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
+import { useJsApiLoader, GoogleMap, MarkerF } from '@react-google-maps/api';
 
 type Props = { user: IUser };
 
@@ -58,9 +58,10 @@ const DashboardPage = (props: Props) => {
                                 mapTypeControl: false,
                                 fullscreenControl: false,
                             }}
-                        />
+                        >
+                            <MarkerF position={{ lat: 28.641307, lng: 77.111225}} />
+                        </GoogleMap>
                     </div>
-                    <Marker position={{ lat: 28.641307, lng: 77.111225}} />
                 </div>
             </DashboardLayout>
         </>
