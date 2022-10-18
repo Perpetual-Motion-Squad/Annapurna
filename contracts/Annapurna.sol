@@ -10,7 +10,14 @@ contract Annapurna is ERC1155, Ownable {
     mapping(uint256 => string) tokenURIs;
     mapping(uint256 => uint256) tokenSupply;
 
-    constructor() ERC1155("") {}
+    constructor() ERC1155("") {
+        tokenSupply[0] = 1;
+        tokenURIs[0] = "asdf";
+    }
+
+    function getTokenSupply(uint256 tokenId) public view returns (uint256) {
+        return tokenSupply[tokenId];
+    }
 
     function setTokenSupply(
         uint256 _tokenId,

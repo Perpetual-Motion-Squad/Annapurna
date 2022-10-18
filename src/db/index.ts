@@ -14,7 +14,9 @@ export type IUser = {
 }
 
 export type IEvent = {
-
+    event: string;
+    location: string;
+    date: string;
 }
 
 export const Users = db.collection<IUser>('Users');

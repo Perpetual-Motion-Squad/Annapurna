@@ -5,7 +5,7 @@ import { AuthProvider } from '~/context/auth-provider';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider desiredChainId={ChainId.Polygon}>
+    <ThirdwebProvider desiredChainId={ChainId.Polygon} >
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
