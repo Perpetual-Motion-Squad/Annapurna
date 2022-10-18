@@ -1,4 +1,4 @@
-import { useAuth } from "hooks/auth";
+import { useAuth } from "~/hooks/auth";
 import React from "react";
 import Form from "./form";
 
