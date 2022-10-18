@@ -1,11 +1,12 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
+import { IEvent } from '~/db';
 
 export const config = {
   runtime: 'experimental-edge',
 };
 
-const EventImage = (props: { title: string }) => {
+const EventImage = (props: IEvent) => {
   return (
     <div
       style={{
@@ -49,7 +50,7 @@ const EventImage = (props: { title: string }) => {
           whiteSpace: 'pre-wrap',
         }}
       >
-        {props.title}
+        {JSON.stringify(props)}
       </div>
     </div>
   )
@@ -59,16 +60,15 @@ export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
 
-    const title = searchParams.has('title')
-      ? searchParams.get('title')?.slice(0, 100)!
-      : 'My default title';
+    const event: IEvent = {
+      event: searchParams.get('event') || '',
+      date: searchParams.get('date') || '',
+      location: searchParams.get('location') || '',
+    };
 
     return new ImageResponse(
-      <EventImage title={title} />,
-      {
-        width: 1200,
-        height: 630,
-      },
+      <EventImage {...event} />,
+      { width: 1200, height: 630, },
     );
   } catch (e: any) {
     console.log(`${ e.message }`);
