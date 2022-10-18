@@ -16,29 +16,21 @@ type Props = { user: IUser };
 const ParticpantsPage = (props: Props) => {
   const balance = useBalance();
 
-  const { isLoaded } = useJsApiLoader({});
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
-
   const participantDetailsArray = [
     {
-      Name: "Dhruv Bakshi",
-      Age: 20,
-      Occupation: "Sex Offender",
-      Tokens: 6,
+      username: "Dhruv Bakshi",
+      address: "0x1234567890",
+      tokens: 6,
     },
     {
-      Name: "John Doe",
-      Age: 69,
-      Occupation: "Software Engineer",
-      Tokens: 6,
+      username: "Dhruv Bakshi",
+      address: "0x1234567890",
+      tokens: 6,
     },
     {
-      Name: "Kushagra Lakhwani",
-      Age: 19,
-      Occupation: "Cringe",
-      Tokens: 6,
+      username: "Dhruv Bakshi",
+      address: "0x1234567890",
+      tokens: 6,
     },
   ];
 
@@ -46,11 +38,10 @@ const ParticpantsPage = (props: Props) => {
     (participant, index) => {
       return (
         <ParticipantCard
-          name={participant.Name}
-          age={participant.Age}
-          occupation={participant.Occupation}
-          tokens={participant.Tokens}
-          id={index}
+          username={participant.username}
+          address={participant.address}
+          tokens={participant.tokens}
+          key={index}
         />
       );
     }
@@ -67,9 +58,7 @@ const ParticpantsPage = (props: Props) => {
           <h2 className="text-white font-sora text-4xl">All Participants</h2>
           <div className="flex flex-col gap-4">
             <div className="flex gap-5 w-full flex-wrap overflow-y-scroll justify-center sm:justify-start items-center pr-4">
-              <ParticipantHeader
-                objectKeys={Object.keys(participantDetailsArray)}
-              />
+              <ParticipantHeader />
               {participantDetails}
             </div>
             <button className="bg-[#FF5F26] text-white w-full p-5 rounded-xl text-2xl gap-10 cursor-pointer text-center shadow__up shadow-xl hover:bg-[#531e0b] transition-all">
