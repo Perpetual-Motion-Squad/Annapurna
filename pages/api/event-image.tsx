@@ -1,12 +1,12 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
-import { IEvent } from '~/db';
+import { IEvent, IRegisteredAddresses } from '~/db';
 
 export const config = {
   runtime: 'experimental-edge',
 };
 
-const EventImage = (props: IEvent) => {
+const EventImage = (props: Omit<IEvent, 'imageURL'>) => {
   return (
     <div
       style={{
@@ -60,12 +60,17 @@ export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
 
-    const event: IEvent = {
+    const event: Omit<IEvent, 'imageURL'> = {
       event: searchParams.get('event') || '',
       date: searchParams.get('date') || '',
       location: searchParams.get('location') || '',
       ticketSupply: +searchParams.get('ticketSupply')!,
-      registeredAddresses: [],
+      registeredAddresses: [] as IRegisteredAddresses[],
+      coordinates: {
+        lat: +searchParams.get('lat')!,
+        lng: +searchParams.get('lng')!,
+      },
+      tokenID: +(searchParams.get('tokenID') || 0),
     };
 
     return new ImageResponse(

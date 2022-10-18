@@ -15,6 +15,12 @@ export type IUser = {
     role: UserRole;
 };
 
+export type IRegisteredAddresses = {
+    username: string;
+    address: string;
+    tokens: number;
+}
+
 export type IEvent = {
     event: string;
     tokenID: number;
@@ -22,9 +28,13 @@ export type IEvent = {
     location: string;
     coordinates: { lat: number, lng: number };
     date: string;
-    registeredAddresses: string[];
+    registeredAddresses: IRegisteredAddresses[];
     ticketSupply: number;
 };
+
+export interface IEventDocument extends IEvent {
+    eventId: string;
+}
 
 export const Users = db.collection<IUser>("Users");
 export const Events = db.collection<IEvent>("Events");

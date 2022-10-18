@@ -18,6 +18,10 @@ contract Annapurna is ERC1155, Ownable {
         tokenURIs[0] = "asdf";
     }
 
+    function getRate() public pure returns (uint256) {
+        return MINT_PRICE;
+    }
+
     function getTokenSupply(uint256 tokenId) public view returns (uint256) {
         return tokenSupply[tokenId];
     }

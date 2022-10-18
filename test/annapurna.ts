@@ -31,8 +31,7 @@ describe("Annapurna", function () {
         const tokenId = 1
         const tokenSupply: number = 1
         const rate = await annapurna.MINT_PRICE()
-        console.log(rate)
-        const transaction = await annapurna.mint(recipient, tokenId, tokenSupply, { value: rate });
+        const transaction = await annapurna.mint(recipient, tokenId, tokenSupply, { value: rate.mul(tokenSupply) });
         await transaction.wait();
 
         expect(await annapurna.balanceOf(recipient, tokenId)).to.equal(1);
