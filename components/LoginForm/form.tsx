@@ -61,7 +61,7 @@ export default function Form({ address }: { address: string }) {
       </form>
       <button
         className="hover:bg-[#531e0b] border bg-[#FF5F26] rounded-xl w-3/4 py-5 text-2xl"
-        type="submit"
+        onClick={submitForm}
       >
         Create Account
       </button>
