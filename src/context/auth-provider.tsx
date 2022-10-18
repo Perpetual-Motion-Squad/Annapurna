@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
-        if (address && !loading) {
+        if (address) {
             setLoading(true);
             getUser(address)
                 .then((user) => setUser(user))
