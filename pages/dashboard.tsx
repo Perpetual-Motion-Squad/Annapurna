@@ -5,39 +5,31 @@ import DashboardLayout from "../components/DashboardLayout";
 import LocationCard from "../components/LocationCard";
 import { useBalance } from "@thirdweb-dev/react"
 import { useAuth } from "~/hooks/auth";
-import { IUser } from "~/db";
-import EventModel from "components/EventModel";
+import { Events, IEventDocument, IUser } from "~/db";
 import { useJsApiLoader, GoogleMap, MarkerF } from '@react-google-maps/api';
+import { GetServerSideProps } from "next";
 
-type Props = { user: IUser };
+type Props = { user: IUser; events: IEventDocument[] };
 
 const DashboardPage = (props: Props) => {
     const balance = useBalance();
-    const [showModel, setShowModel] = useState(true);
-
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     })
-    if(!isLoaded){
+    if (!isLoaded) {
         return <div>Loading...</div>
     }
     return (
         <>
-            {showModel && <EventModel setShowModel={setShowModel} />}
             <DashboardLayout className="p-10 w-full">
                 <DashboardHeader ether={balance.data?.displayValue} username={props.user.username} />
                 <div className="mt-16 relative">
                     <h2 className="text-white font-sora text-4xl">Latest Events</h2>
                     <div className="mt-10 flex gap-5 w-full flex-wrap max-h-[420px] overflow-y-scroll pb-24 justify-center sm:justify-start items-center">
-                        <LocationCard />
-                        <LocationCard />
-                        <LocationCard />
+                        {props.events.map((event) => {
+                            return <LocationCard event={event} key={event.tokenID} />;
+                        })}
                     </div>
-                    {/* <img
-                        src="/images/map.png"
-                        alt="map"
-                        className="w-full h-[300px] object-cover rounded-2xl shadow__up relative -mt-10 z-10"
-                    /> */}
                     <div className="py-0 shadow__up">
                         <GoogleMap
                             mapContainerStyle={{
@@ -50,7 +42,7 @@ const DashboardPage = (props: Props) => {
                                 zIndex: 10,
                             }}
                             zoom={14}
-                            center={{ lat: 28.641307, lng: 77.111225}}
+                            center={{ lat: 28.641307, lng: 77.111225 }}
                             options={{
                                 disableDefaultUI: true,
                                 zoomControl: false,
@@ -59,7 +51,7 @@ const DashboardPage = (props: Props) => {
                                 fullscreenControl: false,
                             }}
                         >
-                            <MarkerF position={{ lat: 28.641307, lng: 77.111225}} />
+                            <MarkerF position={{ lat: 28.641307, lng: 77.111225 }} />
                         </GoogleMap>
                     </div>
                 </div>
@@ -68,16 +60,28 @@ const DashboardPage = (props: Props) => {
     );
 };
 
-const Dashboard = () => {
+type ServerProps = { events: IEventDocument[] };
+
+const Dashboard = (props: ServerProps) => {
     const { loading, error, user } = useAuth();
 
     return (
         <>
             {loading ? <div>Loading...</div>
                 : error ? <div>Error {error}</div>
-                    : user ? <DashboardPage user={user} />
+                    : user ? <DashboardPage user={user} events={props.events} />
                         : <div>Not logged in</div>}
-        </>)
+        </>
+    );
 }
+
+export const getServerSideProps: GetServerSideProps<ServerProps> = async () => {
+    const res = (await Events.find({}).project({ registeredAddresses: 0 }).toArray());
+    for (const event of res) {
+        event.eventId = event._id.toString();
+        delete event._id;
+    }
+    return { props: { events: res as IEventDocument[] } };
+};
 
 export default Dashboard;

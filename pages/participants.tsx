@@ -1,38 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardLayout from "../components/DashboardLayout";
-import LocationCard from "../components/LocationCard";
 import { useBalance } from "@thirdweb-dev/react";
 import { useAuth } from "~/hooks/auth";
-import { IUser } from "~/db";
-import EventModel from "components/EventModel";
-import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
+import { Events, IEvent, IUser } from "~/db";
 import ParticipantCard from "components/ParticipantCard";
 import ParticipantHeader from "components/ParticipantCard/ParticipantHeader";
+import { GetServerSideProps } from "next";
+import { ObjectId } from "mongodb";
+import EventModel from "components/EventModel";
+import { useState } from "react";
 
-type Props = { user: IUser };
+type Props = { event: IEvent | null };
 
-const ParticpantsPage = (props: Props) => {
+const participantDetailsArray = [
+  {
+    username: "Dhruv Bakshi",
+    address: "0x1234567890",
+    tokens: 6,
+  },
+  {
+    username: "Dhruv Bakshi",
+    address: "0x1234567890",
+    tokens: 6,
+  },
+  {
+    username: "Dhruv Bakshi",
+    address: "0x1234567890",
+    tokens: 6,
+  },
+];
+
+const ParticpantsPage = (props: { user: IUser; event: IEvent }) => {
   const balance = useBalance();
-
-  const participantDetailsArray = [
-    {
-      username: "Dhruv Bakshi",
-      address: "0x1234567890",
-      tokens: 6,
-    },
-    {
-      username: "Dhruv Bakshi",
-      address: "0x1234567890",
-      tokens: 6,
-    },
-    {
-      username: "Dhruv Bakshi",
-      address: "0x1234567890",
-      tokens: 6,
-    },
-  ];
+  const [showModal, setShowModal] = useState(false);
 
   const participantDetails = participantDetailsArray.map(
     (participant, index) => {
@@ -49,6 +50,7 @@ const ParticpantsPage = (props: Props) => {
 
   return (
     <>
+      {showModal && <EventModel setShowModel={setShowModal} event={props.event} />}
       <DashboardLayout className="p-10 w-full">
         <DashboardHeader
           ether={balance.data?.displayValue}
@@ -61,8 +63,8 @@ const ParticpantsPage = (props: Props) => {
               <ParticipantHeader />
               {participantDetails}
             </div>
-            <button className="bg-[#FF5F26] text-white w-full p-5 rounded-xl text-2xl gap-10 cursor-pointer text-center shadow__up shadow-xl hover:bg-[#531e0b] transition-all">
-              Add Participants
+            <button className="bg-[#FF5F26] text-white w-full p-5 rounded-xl text-2xl gap-10 cursor-pointer text-center shadow__up shadow-xl hover:bg-[#531e0b] transition-all" onClick={() => setShowModal(true)}>
+              Buy Tickets
             </button>
           </div>
         </div>
@@ -71,22 +73,40 @@ const ParticpantsPage = (props: Props) => {
   );
 };
 
-const Particpants = () => {
+const Particpants = (props: Props) => {
   const { loading, error, user } = useAuth();
 
   return (
     <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>Error {error}</div>
-      ) : user ? (
-        <ParticpantsPage user={user} />
-      ) : (
-        <div>Not logged in</div>
-      )}
+      {
+        props.event ?
+          loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div>Error {error}</div>
+          ) : user ? (
+            <ParticpantsPage user={user} event={props.event} />
+          ) : (
+            <div>Not logged in</div>
+          ) : <div>Event not found</div>
+      }
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+  const id = context.query.id as string;
+  let event: IEvent | null = null;
+  if (id)
+    event = await Events.findOne({ _id: new ObjectId(id as string) });
+
+  delete (event as unknown as any)?._id;
+
+  return {
+    props: {
+      event,
+    },
+  };
 };
 
 export default Particpants;
