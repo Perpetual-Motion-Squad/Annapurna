@@ -18,7 +18,7 @@ To do this, we would require support from Local NGOs, to help the people get add
 
 ### Technologies
 
-Tailwind CSS, React, Next.JS, MongoDB, Polygon, Moralis, MetaMask, HardHat, Web3, Figma
+Tailwind CSS, React, Next.JS, MongoDB, Polygon, MetaMask, HardHat, Web3, Figma
 
 ### Challenges we ran into
 
