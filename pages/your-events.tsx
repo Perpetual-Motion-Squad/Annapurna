@@ -3,29 +3,13 @@ import DashboardHeader from 'components/DashboardHeader'
 import DashboardLayout from 'components/DashboardLayout'
 import { IUser } from "~/db";
 import React from 'react'
+import { useAuth } from '~/hooks/auth';
 
 type Props = { user: IUser };
 
-const Events = (props: Props) => {
+const EventsPage = (props: Props) => {
     const balance = useBalance();
-    const data = [{
-        event: "abc",
-        tokenID: 1234,
-        imageURL: "",
-        location: "xyz",
-        coordinates: { lat: 28, lng: 77 },
-        date: "2022-10-10",
-        ticketSupply: 5
-    },
-    {
-        event: "aisd",
-        tokenID: 1234,
-        imageURL: "",
-        location: "xyz",
-        coordinates: { lat: 28, lng: 77 },
-        date: "2022-10-10",
-        ticketSupply: 5
-    }]
+
     return (
         <DashboardLayout className="p-10 w-full" active="add">
             <DashboardHeader
@@ -33,7 +17,7 @@ const Events = (props: Props) => {
                 username="abc"
             />
             <div className="mt-16 relative grid grid-cols-4 gap-5">
-                {data.map((event, index) => {
+                {props?.user?.myEvents?.map((event, index) => {
                     return (
                         <div className="flex flex-col gap-5 border-2 border-[#FF5F26] rounded-xl" key={index}>
                             <div className="flex flex-col gap-5">
@@ -54,7 +38,7 @@ const Events = (props: Props) => {
                                 </div>
                                 <div className="flex gap-10 justify-between text-xl items-center">
                                     <p className="text-white font-sora text-4xl mx-auto w-full text-center">
-                                        Tickets : {event.ticketSupply}
+                                        Tickets : {event.tickets}
                                     </p>
                                 </div>
                             </div>
@@ -65,5 +49,23 @@ const Events = (props: Props) => {
         </DashboardLayout>
     )
 }
+
+const Events = () => {
+    const { loading, error, user } = useAuth();
+
+    return (
+        <>
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>Error {error}</div>
+            ) : user ? (
+                <EventsPage user={user} />
+            ) : (
+                <div>Not logged in</div>
+            )}
+        </>
+    );
+};
 
 export default Events
