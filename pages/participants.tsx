@@ -21,6 +21,7 @@ const ParticpantsPage = (props: { user: IUser; event: IEventDocument }) => {
     (participant, index) => {
       return (
         <ParticipantCard
+          event={props.event}
           username={participant.username}
           address={participant.address}
           tokens={participant.tokens}
@@ -33,7 +34,7 @@ const ParticpantsPage = (props: { user: IUser; event: IEventDocument }) => {
   return (
     <>
       {showModal && <EventModel setShowModel={setShowModal} event={props.event} />}
-      <DashboardLayout className="p-10 w-full">
+      <DashboardLayout active="participants" className="p-10 w-full">
         <DashboardHeader
           ether={balance.data?.displayValue}
           username={props.user.username}
