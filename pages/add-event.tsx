@@ -18,21 +18,14 @@ const center = {
     lng: 77.111225,
 };
 
-const getAddress = (lat: number, lng: number) => {
+const getAddress = async (lat: number, lng: number) => {
     Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
     Geocode.setLanguage("en");
     Geocode.setRegion("in");
     Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
-    Geocode.fromLatLng(lat, lng).then(
-        (response) => {
-            const address = response.results[0].formatted_address;
-            console.log(address);
-            return address;
-        },
-        (error) => {
-            console.error(error);
-        }
-    );
+    const response = await Geocode.fromLatLng(lat, lng);
+    const address = response.results[0].formatted_address;
+    return address;
 };
 
 const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel }) => {
@@ -93,15 +86,12 @@ const AddEventPage = (props: Props) => {
     const [mapCoords, setMapsCoords] = useState(center);
     const [showLocationModel, setShowlocationModel] = useState(false);
 
-    console.log(currentLocation);
-
-    const [currentLocation, setCurrentLocation] = useState(
-        getAddress(mapCoords.lat, mapCoords.lng)
-    );
+    const [currentLocation, setCurrentLocation] = useState("");
 
     useEffect(() => {
-        const address = getAddress(mapCoords.lat, mapCoords.lng);
-        setCurrentLocation(address);
+        const address = getAddress(mapCoords.lat, mapCoords.lng).then(
+            (res: string) => setCurrentLocation(res)
+        );
     }, [mapCoords.lat, mapCoords.lng]);
 
     const submitForm: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -121,6 +111,7 @@ const AddEventPage = (props: Props) => {
                     location: data.location,
                     ticketSupply: data.ticketSupply.toString(),
                 }).toString();
+            data.coordinates = mapCoords;
             const img = await fetch(imgEndpoint);
             const imgBlob = await img.blob();
             const imgFormData = new FormData();
@@ -148,9 +139,6 @@ const AddEventPage = (props: Props) => {
                 data.ticketSupply,
                 imgURL
             );
-            console.log(imgURL, res);
-            data.coordinates = mapCoords;
-
             const resp = await fetch("/api/new-event", {
                 method: "POST",
                 body: JSON.stringify(data),
