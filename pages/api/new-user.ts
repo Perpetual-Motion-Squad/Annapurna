@@ -13,6 +13,6 @@ export default async function handler(
     if (!username || !address || !email || !locality)
         return res.status(400).send({ message: "Missing username or address" });
 
-    await Users.insertOne({ username, address, email, locality, role: +role });
+    await Users.insertOne({ username, address, email, locality, role: +role, myEventIDs: [] });
     return res.status(200).send({ message: "User created" });
 }
