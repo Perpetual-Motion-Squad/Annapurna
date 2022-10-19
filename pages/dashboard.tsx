@@ -13,6 +13,7 @@ import {
     MarkerClusterer,
 } from "@react-google-maps/api";
 import { GetServerSideProps } from "next";
+import Loading from "components/Loading";
 
 type Props = { user: IUser; events: IEventDocument[] };
 
@@ -22,7 +23,7 @@ const DashboardPage = (props: Props) => {
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     });
     if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
     return (
         <>
@@ -95,13 +96,13 @@ const Dashboard = (props: ServerProps) => {
     return (
         <>
             {loading ? (
-                <div>Loading...</div>
+                <Loading />
             ) : error ? (
                 <div>Error {error}</div>
             ) : user ? (
                 <DashboardPage user={user} events={props.events} />
             ) : (
-                <div>Not logged in</div>
+                <div className="bg-black text-white flex items-center justify-center h-screen w-screen font-sora">Not logged in</div>
             )}
         </>
     );

@@ -7,6 +7,7 @@ import { useAuth } from "~/hooks/auth";
 import { useContract } from "~/hooks/contract";
 import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
 import Geocode from "react-geocode";
+import Loading from "components/Loading";
 
 type Props = { user: IUser };
 
@@ -240,13 +241,13 @@ const AddEvent = () => {
     return (
         <>
             {loading ? (
-                <div>Loading...</div>
+                <Loading />
             ) : error ? (
                 <div>Error {error}</div>
             ) : user ? (
                 <AddEventPage user={user} />
             ) : (
-                <div>Not logged in</div>
+                <div className="bg-black text-white flex items-center justify-center h-screen w-screen font-sora">Not logged in</div>
             )}
         </>
     );

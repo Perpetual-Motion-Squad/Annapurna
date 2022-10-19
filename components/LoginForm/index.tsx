@@ -2,6 +2,7 @@ import { useAuth } from "~/hooks/auth";
 import React from "react";
 import Form from "./form";
 import Link from "next/link";
+import Loading from "components/Loading";
 
 const LoginForm = (props: {}) => {
     const { error, loading, user, address } = useAuth();
@@ -9,7 +10,7 @@ const LoginForm = (props: {}) => {
     return (
         <>
             {loading ? (
-                <div>Loading...</div>
+                <Loading />
             ) : user ? (
                 <>
                     <div className="bg-[#383838] p-6 rounded-xl text-xl">
