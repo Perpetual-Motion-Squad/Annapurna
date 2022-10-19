@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Events } from '~/db';
+import { Events, Users } from '~/db';
 
 export type IBuyTicketsRequest = {
     username: string;
@@ -24,6 +24,11 @@ export default async function handler(
     await Events.updateOne(
         { _id: new ObjectId(eventID) },
         { $push: { registeredAddresses: { username, address, tokens } }, $inc: { ticketSupply: -tokens } }
+    );
+
+    Users.updateOne(
+        { address },
+        { $push: { myEventIDs: eventID } }
     );
 
     return res.status(200).send({ message: "Tickets minted" });
