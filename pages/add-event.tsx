@@ -1,11 +1,12 @@
 import { useBalance } from "@thirdweb-dev/react";
 import DashboardHeader from "components/DashboardHeader";
 import DashboardLayout from "components/DashboardLayout";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { IEvent, IUser } from "~/db";
 import { useAuth } from "~/hooks/auth";
 import { useContract } from "~/hooks/contract";
 import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
+import Geocode from "react-geocode";
 
 type Props = { user: IUser };
 
@@ -15,6 +16,23 @@ const pinata_secret_api_key = process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY!;
 const center = {
     lat: 28.641307,
     lng: 77.111225,
+};
+
+const getAddress = (lat: number, lng: number) => {
+    Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
+    Geocode.setLanguage("en");
+    Geocode.setRegion("in");
+    Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
+    Geocode.fromLatLng(lat, lng).then(
+        (response) => {
+            const address = response.results[0].formatted_address;
+            console.log(address);
+            return address;
+        },
+        (error) => {
+            console.error(error);
+        }
+    );
 };
 
 const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel }) => {
@@ -74,6 +92,17 @@ const AddEventPage = (props: Props) => {
     const [loading, setLoading] = useState(false);
     const [mapCoords, setMapsCoords] = useState(center);
     const [showLocationModel, setShowlocationModel] = useState(false);
+
+    console.log(currentLocation);
+
+    const [currentLocation, setCurrentLocation] = useState(
+        getAddress(mapCoords.lat, mapCoords.lng)
+    );
+
+    useEffect(() => {
+        const address = getAddress(mapCoords.lat, mapCoords.lng);
+        setCurrentLocation(address);
+    }, [mapCoords.lat, mapCoords.lng]);
 
     const submitForm: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
@@ -181,7 +210,7 @@ const AddEventPage = (props: Props) => {
                                 className="w-60 py-2 px-4 rounded-xl text-black truncate"
                                 name="location"
                                 onClick={() => setShowlocationModel(true)}
-                                value={`${mapCoords.lat}, ${mapCoords.lng}`}
+                                value={currentLocation}
                             />
                         </label>
                         <label className="flex gap-10 justify-between text-xl items-center">
