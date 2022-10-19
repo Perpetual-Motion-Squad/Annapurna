@@ -10,7 +10,9 @@ const Landing = (props: Props) => {
         <div className="text-white relative h-full">
             <div className="h-screen w-full relative">
                 <div className="absolute top-0 left-0 h-full w-full banner__mask">
-                    <img
+                    <Image
+                        height={1080}
+                        width={1920}
                         src="/images/people-eating.png"
                         alt="mask"
                         className="h-full w-full object-cover"
