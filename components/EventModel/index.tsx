@@ -1,3 +1,4 @@
+import Loading from 'components/Loading';
 import { BigNumber } from 'ethers';
 import type { IBuyTicketsRequest } from 'pages/api/buy-tickets';
 import { FormEventHandler, useState } from 'react'
@@ -75,7 +76,7 @@ const EventModel = (props: Props) => {
                         <button className='py-2 px-4 rounded-xl bg-orange-500 text-white' onClick={() => props.setShowModel(false)}>Close</button>
                     </div>
                 </form>
-                {loading && <div className="text-xl">Loading...</div>}
+                {loading && <Loading />}
                 {success === true && <div className="text-xl">Success!</div>}
                 {success === false && <div className="text-xl">Error!</div>}
             </div>

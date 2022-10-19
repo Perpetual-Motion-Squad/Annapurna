@@ -10,6 +10,7 @@ import { GetServerSideProps } from "next";
 import { ObjectId } from "mongodb";
 import EventModel from "components/EventModel";
 import { useState } from "react";
+import Loading from "components/Loading";
 
 type Props = { event: IEventDocument | null };
 
@@ -69,13 +70,13 @@ const Particpants = (props: Props) => {
         <>
             {props.event ? (
                 loading ? (
-                    <div>Loading...</div>
+                    <Loading />
                 ) : error ? (
                     <div>Error {error}</div>
                 ) : user ? (
                     <ParticpantsPage user={user} event={props.event} />
                 ) : (
-                    <div>Not logged in</div>
+                    <div className="bg-black text-white flex items-center justify-center h-screen w-screen font-sora">Not logged in</div>
                 )
             ) : (
                 <div>Event not found</div>

@@ -4,6 +4,7 @@ import DashboardLayout from 'components/DashboardLayout'
 import { IUser } from "~/db";
 import React from 'react'
 import { useAuth } from '~/hooks/auth';
+import Loading from 'components/Loading';
 
 type Props = { user: IUser };
 
@@ -14,7 +15,7 @@ const EventsPage = (props: Props) => {
         <DashboardLayout className="p-10 w-full" active="add">
             <DashboardHeader
                 ether={balance.data?.displayValue}
-                username="abc"
+                username={props.user.username}
             />
             <div className="mt-16 relative grid grid-cols-4 gap-5">
                 {props?.user?.myEvents?.map((event, index) => {
@@ -56,13 +57,13 @@ const Events = () => {
     return (
         <>
             {loading ? (
-                <div>Loading...</div>
+                <Loading />
             ) : error ? (
                 <div>Error {error}</div>
             ) : user ? (
                 <EventsPage user={user} />
             ) : (
-                <div>Not logged in</div>
+                <div className="bg-black text-white flex items-center justify-center h-screen w-screen font-sora">Not logged in</div>
             )}
         </>
     );
