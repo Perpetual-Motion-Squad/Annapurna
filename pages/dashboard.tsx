@@ -6,7 +6,12 @@ import LocationCard from "../components/LocationCard";
 import { useBalance } from "@thirdweb-dev/react";
 import { useAuth } from "~/hooks/auth";
 import { Events, IEventDocument, IUser } from "~/db";
-import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
+import {
+    useJsApiLoader,
+    GoogleMap,
+    MarkerF,
+    MarkerClusterer,
+} from "@react-google-maps/api";
 import { GetServerSideProps } from "next";
 
 type Props = { user: IUser; events: IEventDocument[] };
@@ -61,9 +66,17 @@ const DashboardPage = (props: Props) => {
                                 fullscreenControl: false,
                             }}
                         >
-                            <MarkerF
-                                position={{ lat: 28.641307, lng: 77.111225 }}
-                            />
+                            {props.events.map((event, idx) => {
+                                return (
+                                    <MarkerF
+                                        position={{
+                                            lat: event.coordinates.lat,
+                                            lng: event.coordinates.lng,
+                                        }}
+                                        key={idx}
+                                    />
+                                );
+                            })}
                         </GoogleMap>
                     </div>
                 </div>

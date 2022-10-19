@@ -50,7 +50,7 @@ const ParticpantsPage = (props: { user: IUser; event: IEventDocument }) => {
                             {participantDetails}
                         </div>
                         <button
-                            className="bg-[#FF5F26] text-white w-full p-5 rounded-xl text-2xl gap-10 cursor-pointer text-center shadow__up shadow-xl hover:bg-[#531e0b] transition-all"
+                            className="bg-[#FF5F26] text-white w-full p-3 rounded-xl text-2xl gap-10 cursor-pointer text-center shadow-xl hover:bg-[#531e0b] transition-all font-sora"
                             onClick={() => setShowModal(true)}
                         >
                             Buy Tickets
