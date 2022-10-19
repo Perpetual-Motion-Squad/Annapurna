@@ -7,17 +7,13 @@ type Props = {};
 
 const Landing = (props: Props) => {
     return (
-        <div className="text-white relative h-full">
+        <div className="text-white relative h-full w-full">
             <div className="h-screen w-full relative">
-                <div className="absolute top-0 left-0 h-full w-full banner__mask">
-                    <Image
-                        height={1080}
-                        width={1920}
-                        src="/images/people-eating.png"
-                        alt="mask"
-                        className="h-full w-full object-cover z-10"
-                    />
-                </div>
+                <img
+                    src="/images/people-eating.png"
+                    alt="mask"
+                    className="h-full w-screen z-10 clip object-cover"
+                />
                 <div className="w-8/12 pl-28 pr-24 py-5 absolute bottom-0 right-0 h-[350px]">
                     <h1 className="text-7xl font-medium font-lora">
                         Changing the world together.
