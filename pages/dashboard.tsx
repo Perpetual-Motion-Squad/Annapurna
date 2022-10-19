@@ -37,12 +37,13 @@ const DashboardPage = (props: Props) => {
                     </h2>
                     <div className="mt-10 flex gap-5 w-full flex-wrap max-h-[420px] overflow-y-scroll pb-24 justify-center sm:justify-start items-center">
                         {props.events.map((event) => {
-                            return (
-                                <LocationCard
-                                    event={event}
-                                    key={event.tokenID}
-                                />
-                            );
+                            if (event.ticketSupply > 0)
+                                return (
+                                    <LocationCard
+                                        event={event}
+                                        key={event.tokenID}
+                                    />
+                                );
                         })}
                     </div>
                     <div className="py-0 shadow__up">
@@ -67,15 +68,16 @@ const DashboardPage = (props: Props) => {
                             }}
                         >
                             {props.events.map((event, idx) => {
-                                return (
-                                    <MarkerF
-                                        position={{
-                                            lat: event.coordinates.lat,
-                                            lng: event.coordinates.lng,
-                                        }}
-                                        key={idx}
-                                    />
-                                );
+                                if (event.ticketSupply > 0)
+                                    return (
+                                        <MarkerF
+                                            position={{
+                                                lat: event.coordinates.lat,
+                                                lng: event.coordinates.lng,
+                                            }}
+                                            key={idx}
+                                        />
+                                    );
                             })}
                         </GoogleMap>
                     </div>
