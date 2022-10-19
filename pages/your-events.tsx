@@ -35,22 +35,22 @@ const Events = (props: Props) => {
                         <div className="flex flex-col gap-5">
                             <div className="flex gap-10 justify-between text-xl items-center">
                                 <p className="text-white font-sora text-4xl mx-auto w-full text-center">
-                                    {event.event}
+                                    Event : {event.event}
                                 </p>
                             </div>
                             <div className="flex gap-10 justify-between text-xl items-center">
                                 <p className="text-white font-sora text-4xl mx-auto w-full text-center">
-                                    {event.location}
+                                    Location : {event.location}
                                 </p>
                             </div>
                             <div className="flex gap-10 justify-between text-xl items-center">
                                 <p className="text-white font-sora text-4xl mx-auto w-full text-center">
-                                    {event.date}
+                                    Date : {event.date}
                                 </p>
                             </div>
                             <div className="flex gap-10 justify-between text-xl items-center">
                                 <p className="text-white font-sora text-4xl mx-auto w-full text-center">
-                                    {event.ticketSupply}
+                                    Tickets : {event.ticketSupply}
                                 </p>
                             </div>
                         </div>
