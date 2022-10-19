@@ -24,13 +24,13 @@ const getAddress = async (lat: number, lng: number) => {
     Geocode.setLanguage("en");
     Geocode.setRegion("in");
     Geocode.setApiKey(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
-    const response = await Geocode.fromLatLng(lat, lng);
+    const response = await Geocode.fromLatLng(lat.toString(), lng.toString());
     const address = response.results[0].formatted_address;
     return address;
 };
 
 
-const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel} : { mapCoords:any, setMapsCoords:any, setShowlocationModel:any}) => {
+const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel }: { mapCoords: any, setMapsCoords: any, setShowlocationModel: any }) => {
     return (
         <div
             className="fixed bg-[#000000a1] h-full w-screen z-50 grid place-items-center"
@@ -132,15 +132,46 @@ const AddEventPage = (props: Props) => {
             const imgJson = await imgRes.json();
 
             const imgHash = imgJson.IpfsHash;
-            const imgURL = `https://gateway.pinata.cloud/ipfs/${imgHash}`;
+            const imgURL = `https://gateway.pinata.cloud/ipfs/${ imgHash }`;
+
+            const NFTMetadata = {
+                description: `Enjoying the food at ${ data.location } on ${ data.date }`,
+                external_url: "https://annapurnaa.vercel.app" + imgEndpoint,
+                image: imgURL,
+                name: data.event
+            }
+
+            // upload metadata to pinata
+            const metadataFormData = new FormData();
+            metadataFormData.append("file", new Blob([JSON.stringify(NFTMetadata)], { type: "application/json" }), "metadata.json");
+
+            const metadataRes = await fetch(
+                "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                {
+                    method: "POST",
+                    headers: {
+                        pinata_api_key,
+                        pinata_secret_api_key,
+                    },
+                    body: metadataFormData,
+                }
+            );
+
+            const metadataJson = await metadataRes.json();
+            const metadataHash = metadataJson.IpfsHash;
+            const metadataURL = `https://gateway.pinata.cloud/ipfs/${ metadataHash }`;
+
+            console.log(metadataURL);
+
             const tokenID = await contract.NEXT_TOKEN_ID();
             data.tokenID = tokenID.toNumber();
             data.imageURL = imgEndpoint;
             const res = await contract?.setTokenSupply(
                 tokenID,
                 data.ticketSupply,
-                imgURL
+                metadataURL
             );
+            await res.wait();
             const resp = await fetch("/api/new-event", {
                 method: "POST",
                 body: JSON.stringify(data),
