@@ -26,20 +26,6 @@ const Sidebar = (props: Props) => {
                         +
                     </div>
                 </Link>
-                <Link href="/dashboard">
-                    <div
-                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
-                            props.active === "dashboard" && "dashboard__active"
-                        }`}
-                    >
-                        <Image
-                            src="/images/events.svg"
-                            height={25}
-                            width={25}
-                            alt="logo"
-                        />
-                    </div>
-                </Link>
                 <Link href="/participants">
                     <div
                         className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
@@ -48,7 +34,21 @@ const Sidebar = (props: Props) => {
                         }`}
                     >
                         <Image
-                            src="/images/people.svg"
+                            src="/images/ticket.svg"
+                            height={30}
+                            width={30}
+                            alt="logo"
+                        />
+                    </div>
+                </Link>
+                <Link href="/dashboard">
+                    <div
+                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
+                            props.active === "dashboard" && "dashboard__active"
+                        }`}
+                    >
+                        <Image
+                            src="/images/events.svg"
                             height={25}
                             width={25}
                             alt="logo"
