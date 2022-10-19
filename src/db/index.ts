@@ -7,13 +7,21 @@ client.connect().then(() => console.log("Connected to database")).catch((err) =>
 
 const db = client.db("annapurna");
 
+export type IMyEvent = {
+    eventID: string;
+    event: string;
+    location: string;
+    date: string;
+    tickets: number;
+}
+
 export type IUser = {
     address: string;
     username: string;
     email: string;
     locality: string;
     role: UserRole;
-    myEventIDs: string[];
+    myEvents: IMyEvent[];
 };
 
 export type IRegisteredAddresses = {

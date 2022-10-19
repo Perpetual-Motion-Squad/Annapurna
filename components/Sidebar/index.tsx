@@ -19,33 +19,31 @@ const Sidebar = (props: Props) => {
             <div className="flex flex-col gap-10">
                 <Link href="/add-event">
                     <div
-                        className={`h-[50px] w-[50px] text-white grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
-                            props.active === "add" && "dashboard__active"
-                        }`}
+                        className={`h-[50px] w-[50px] text-white grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "add" && "dashboard__active"
+                            }`}
                     >
                         +
                     </div>
                 </Link>
-                <Link href="/participants">
+                <Link href="/your-events">
                     <div
-                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
-                            props.active === "participants" &&
+                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "participants" &&
                             "dashboard__active"
-                        }`}
+                            }`}
                     >
                         <Image
                             src="/images/ticket.svg"
                             height={30}
                             width={30}
                             alt="logo"
+                            style={{ filter: "invert(1)" }}
                         />
                     </div>
                 </Link>
                 <Link href="/dashboard">
                     <div
-                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
-                            props.active === "dashboard" && "dashboard__active"
-                        }`}
+                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "dashboard" && "dashboard__active"
+                            }`}
                     >
                         <Image
                             src="/images/events.svg"
