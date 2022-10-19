@@ -13,6 +13,7 @@ export type IUser = {
     email: string;
     locality: string;
     role: UserRole;
+    myEventIDs: string[];
 };
 
 export type IRegisteredAddresses = {

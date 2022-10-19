@@ -16,6 +16,7 @@
         "@thirdweb-dev/sdk": "^3.2.5",
         "@vercel/og": "^0.0.19",
         "add": "^2.0.6",
+        "dotenv": "^16.0.3",
         "hardhat": "^2.12.0",
         "ipfs-http-client": "^58.0.1",
         "mongodb": "^4.10.0",
