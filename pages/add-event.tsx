@@ -29,7 +29,8 @@ const getAddress = async (lat: number, lng: number) => {
     return address;
 };
 
-const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel }) => {
+
+const LocationModel = ({ mapCoords, setMapsCoords, setShowlocationModel} : { mapCoords:any, setMapsCoords:any, setShowlocationModel:any}) => {
     return (
         <div
             className="fixed bg-[#000000a1] h-full w-screen z-50 grid place-items-center"

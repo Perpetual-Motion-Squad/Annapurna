@@ -15,7 +15,7 @@ const EventsPage = (props: Props) => {
         <DashboardLayout className="p-10 w-full" active="add">
             <DashboardHeader
                 ether={balance.data?.displayValue}
-                username="abc"
+                username={props.user.username}
             />
             <div className="mt-16 relative grid grid-cols-4 gap-5">
                 {props?.user?.myEvents?.map((event, index) => {
