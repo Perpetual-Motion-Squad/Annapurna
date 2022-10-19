@@ -19,8 +19,8 @@ html {
 }
 
 .banner__mask {
-    -webkit-mask-image: url("../public/images/banner-mask.svg");
-    mask-image: url("../public/images/banner-mask.svg");
+    /* -webkit-mask-image: url('../public/images/banner-mask.png');
+    mask-image: url('../public/images/banner-mask.png'); */
     mask-size: cover;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
