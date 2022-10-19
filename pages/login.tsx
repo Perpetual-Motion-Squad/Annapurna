@@ -10,15 +10,15 @@ const Loginpage = (props: Props) => {
 
     return (
         <div className="min-h-screen bg-black text-white flex items-center justify-center font-sora overflow-x-hidden">
-            <div className="w-5/6 md:w-4/6 flex flex-col md:flex md:flex-row justify-center items-center gap-24">
+            <div className="w-5/6 md:w-4/6 flex flex-col md:flex md:flex-row justify-center items-center gap-24 shadow-lg shadow-orange-900 rounded-xl px-10">
                 <Image
                     src="/images/logo_full.svg"
                     width={400}
                     height={600}
                     alt="logo"
                 />
-                <div className="flex flex-col justify-center items-center gap-20">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-sora text-center">
+                <div className="flex flex-col justify-center items-center gap-10">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-lora text-center">
                         Welcome to Annapurna
                     </h1>
                     {address ? (

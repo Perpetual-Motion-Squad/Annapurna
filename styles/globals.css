@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body,
+html {
+    scroll-behavior: smooth;
+}
+
 .dashboard__active {
     filter: invert(26%) sepia(81%) saturate(6404%) hue-rotate(354deg)
         brightness(94%) contrast(124%);
@@ -24,19 +29,19 @@
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
