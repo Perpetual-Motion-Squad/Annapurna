@@ -8,7 +8,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 lora: ["Lora", "serif"],
-                sora: ["SORA", "Open Sans", "sans-serif"],
+                sora: ["SORA", "Comfortaa", "sans-serif"],
             },
         },
     },

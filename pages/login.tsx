@@ -10,10 +10,10 @@ const Loginpage = (props: Props) => {
 
     return (
         <div className="min-h-screen bg-black text-white flex items-center justify-center font-sora overflow-x-hidden">
-            <div className="w-5/6 md:w-4/6 flex flex-col md:flex md:flex-row justify-center items-center gap-24 shadow-lg shadow-orange-900 rounded-xl px-10">
+            <div className="w-5/6 md:w-4/6 flex flex-col md:flex md:flex-row justify-center items-center gap-24 rounded-xl px-10">
                 <Image
                     src="/images/logo_full.svg"
-                    width={400}
+                    width={300}
                     height={600}
                     alt="logo"
                 />
