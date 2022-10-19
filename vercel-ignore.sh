@@ -5,8 +5,8 @@ branch=$(git branch --show-current)
 
 if [ "$branch" == "main" ]; then
   # Proceed with build
-    exit 0;
+    exit 1;
 else
   # Don't build
-  exit 1;
+  exit 0;
 fi
