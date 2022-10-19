@@ -26,10 +26,14 @@ export default async function handler(
         { $push: { registeredAddresses: { username, address, tokens } }, $inc: { ticketSupply: -tokens } }
     );
 
-    Users.updateOne(
-        { address },
-        { $push: { myEventIDs: eventID } }
-    );
+    const event = await Events.findOne({ _id: new ObjectId(eventID) });
+
+    if (event) {
+        await Users.updateOne(
+            { address },
+            { $push: { myEvents: { event: event.event, location: event.location, date: event.date, tickets: tokens, eventID } } }
+        );
+    }
 
     return res.status(200).send({ message: "Tickets minted" });
 
