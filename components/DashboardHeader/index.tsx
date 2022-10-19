@@ -16,12 +16,9 @@ const DashboardHeader = (props: Props) => {
                     width={50}
                     alt="diamond"
                 />
-                <h2 className="font-sora font-normal text-xl">
-                    6, Tokens available
-                </h2>
                 {props.ether && (
                     <h2 className="font-sora font-normal text-xl">
-                        | &nbsp; Balance {props.ether} ETH
+                        Balance: {props.ether} MATIC
                     </h2>
                 )}
             </div>

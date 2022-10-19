@@ -19,15 +19,18 @@ const Sidebar = (props: Props) => {
             <div className="flex flex-col gap-10">
                 <Link href="/add-event">
                     <div
-                        className={`h-[50px] w-[50px] text-white grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "add" && "dashboard__active" }`}
+                        className={`h-[50px] w-[50px] text-white grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
+                            props.active === "add" && "dashboard__active"
+                        }`}
                     >
                         +
                     </div>
                 </Link>
                 <Link href="/dashboard">
                     <div
-                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "dashboard" && "dashboard__active"
-                            }`}
+                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
+                            props.active === "dashboard" && "dashboard__active"
+                        }`}
                     >
                         <Image
                             src="/images/events.svg"
@@ -39,8 +42,10 @@ const Sidebar = (props: Props) => {
                 </Link>
                 <Link href="/participants">
                     <div
-                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${ props.active === "dashboard" && "dashboard__active"
-                            }`}
+                        className={`h-[50px] w-[50px] grid place-items-center rounded-full hover:bg-[#ffffff3a] hover:cursor-pointer transition-all text-5xl leading-2 ${
+                            props.active === "participants" &&
+                            "dashboard__active"
+                        }`}
                     >
                         <Image
                             src="/images/people.svg"

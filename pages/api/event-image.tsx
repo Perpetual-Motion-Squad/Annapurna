@@ -63,7 +63,9 @@ const EventImage = (props: IOGImageProps) => {
                     >
                         Location:
                     </h1>
-                    <h2 style={{ color: "white" }}>{props.location}</h2>
+                    <h2 style={{ color: "white", maxWidth: "510px" }}>
+                        {props.location}
+                    </h2>
                 </div>
                 <div
                     style={{
@@ -165,7 +167,7 @@ export default async function handler(req: NextRequest) {
 
         return new ImageResponse(<EventImage {...event} />, {
             width: 1000,
-            height: 500,
+            height: 530,
         });
     } catch (e: any) {
         console.log(`${e.message}`);
