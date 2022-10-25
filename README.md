@@ -34,4 +34,4 @@ The challenges were big but not unsolvable. Due to this idea having very big asp
 
 - [GitHub Repository](https://github.com/IsomerX/annapurna)
 - [Figma Project](https://www.figma.com/file/lwQJesvOoNRyQsmGljOZJ4/Annapurna?node-id=66%3A18)
-- [Deployed Project](https://annapurna-two.vercel.app)
+- [Deployed Project](https://annapurnaa.vercel.app)
