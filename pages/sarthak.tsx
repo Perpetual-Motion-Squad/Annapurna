@@ -1,4 +1,6 @@
+import Landing from 'components/Landing'
 import Navbar from 'components/Navbar'
+import Sidebar from 'components/Sidebar'
 import React from 'react'
 
 const Sarthak = () => {
@@ -10,6 +12,7 @@ const Sarthak = () => {
         <h1 className='text-4xl font-sora font-semibold'>Sarthak god</h1>
 
     </div>
+      <Landing />
 
     </div>
   )
